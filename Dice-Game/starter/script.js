@@ -26,15 +26,20 @@ function init() {
 
 init();
 
+function switchPlayer() {
+  currentScore = 0;
+  activePlayer = activePlayer === 0 ? 1 : 0;
+  name0.classList.toggle('player--active');
+  name1.classList.toggle('player--active');
+}
+
 rollDice.addEventListener('click', function () {
   const diceValue = Math.trunc(Math.random() * 6) + 1;
   console.log(diceValue);
   currentScore += diceValue;
   if (diceValue === 1) {
     currentScore = 0;
-    activePlayer = activePlayer === 0 ? 1 : 0;
-    name0.classList.toggle('player--active');
-    name1.classList.toggle('player--active');
+    switchPlayer();
   }
   document.getElementById(`current--${activePlayer}`).textContent =
     currentScore;
@@ -57,8 +62,5 @@ hold.addEventListener('click', function () {
   document.getElementById(`score--${activePlayer}`).textContent =
     scoreTotal + currentScore;
   document.getElementById(`current--${activePlayer}`).textContent = 0;
-  activePlayer = activePlayer === 0 ? 1 : 0;
-  currentScore = 0;
-  name0.classList.toggle('player--active');
-  name1.classList.toggle('player--active');
+  switchPlayer();
 });
