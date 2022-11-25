@@ -23,7 +23,8 @@ This repository will track projects and topics related to Javascript, HTML and C
   </details>
   
  ##### Table of Contents  
-[Scopes](#scopes)  
+[Scopes](#scopes) </br>
+[Variables](#variables) </br>
    
 <a name="scopes"/>
   
@@ -35,6 +36,7 @@ This repository will track projects and topics related to Javascript, HTML and C
   </div>
   <div>
     <h3><ins>Global Scope</ins></h3>Variables declared outside any function or curly braces '{}' have Global Scope, and can be accessed from anywhere within the same Javascript code. var, let and const all provide this Scope.
+  <img src="global-scope-js.jpg" />
     <br/><br/>
   <ul>
     <li>Variables declared Globally (outside any function) have Global Scope. Global variables can be accessed from anywhere in a JavaScript program. Variables declared with var, let and const are quite similar when declared outside a block.</li>
@@ -42,7 +44,7 @@ This repository will track projects and topics related to Javascript, HTML and C
   </div>
   <div>
     <h3><ins>Function Scope</ins></h3>Variables declared within a function can only be used within that same function. Outside that function, they are undefined. var, let and const all provide this Scope.
-    <br/>
+    <br/><br/>
   <ul>
     <li>When a variable is declared inside a function, it is only accessible within that function and cannot be used outside that function.</li>
     </ul>
@@ -50,14 +52,17 @@ This repository will track projects and topics related to Javascript, HTML and C
   
   <div>
     <h3><ins>Block Scope</ins></h3> A block is any part of JavaScript code bounded by '{}'. Variables declared within a block can not be accessed outside that block. This Scope is only provided by the let and const keywords. If you declare a variable within a block using the var keyword, it will NOT have Block Scope.
-    <br/>
+    <br/><br/>
   <ul>
     <li> This scope restricts the variable that is declared inside a specific block, from access by the outside of the block. The let & const keyword facilitates the variables to be block scoped. In order to access the variables of that specific block, we need to create an object for it. Variables declared with the var keyword, do not have block scope.</li>
     </ul>
   </div>
   <br/>
   
-  ### <ins>Variables</ins>
+  <a name="variables"/>
+  
+  ## Variables
+  
   <strong>var</strong> -- declares a function-scoped or globally-scoped variable, optionally initializing it to a value. <br/>
   <strong>let</strong> -- declares a block-scoped local variable, optionally initializing it to a value. <br/>
   <strong>const</strong> -- Constants are block-scoped, much like variables declared using the let keyword. The value of a constant can't be changed through reassignment (i.e. by using the assignment operator), and it can't be redeclared (i.e. through a variable declaration). However, if a constant is an object or array its properties or items can be updated or removed.<br/>
