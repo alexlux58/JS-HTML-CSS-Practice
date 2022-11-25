@@ -37,7 +37,6 @@ This repository will track projects and topics related to Javascript, HTML and C
   <img src="images/global-scope-js.jpg" />
   <div>
     <h3><ins>Global Scope</ins></h3>Variables declared outside any function or curly braces '{}' have Global Scope, and can be accessed from anywhere within the same Javascript code. var, let and const all provide this Scope.
-  
     <br/><br/>
   <ul>
     <li>Variables declared Globally (outside any function) have Global Scope. Global variables can be accessed from anywhere in a JavaScript program. Variables declared with var, let and const are quite similar when declared outside a block.</li>
@@ -65,9 +64,9 @@ This repository will track projects and topics related to Javascript, HTML and C
   
   ## Variables
   
-  <strong>var</strong>: declares a function-scoped or globally-scoped variable, optionally initializing it to a value. <br/>
-  <strong>let</strong>: declares a block-scoped local variable, optionally initializing it to a value. <br/>
-  <strong>const</strong>: Constants are block-scoped, much like variables declared using the let keyword. The value of a constant can't be changed through reassignment (i.e. by using the assignment operator), and it can't be redeclared (i.e. through a variable declaration). However, if a constant is an object or array its properties or items can be updated or removed.<br/>
+  <strong><ins>VAR</ins></strong></br></br> declares a function-scoped or globally-scoped variable, optionally initializing it to a value. <br/></br>
+  <strong><ins>LET</ins></strong></br></br> declares a block-scoped local variable, optionally initializing it to a value. <br/></br>
+  <strong><ins>CONST</ins></strong></br></br> Constants are block-scoped, much like variables declared using the let keyword. The value of a constant can't be changed through reassignment (i.e. by using the assignment operator), and it can't be redeclared (i.e. through a variable declaration). However, if a constant is an object or array its properties or items can be updated or removed.<br/></br>
   
 
   
