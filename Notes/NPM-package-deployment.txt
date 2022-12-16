@@ -1,0 +1,13 @@
+1. npm init -y (initialize package.json file)
+
+2. export default function
+
+3. Create NPM account (npmjs.com/signup)
+
+4. npm login
+
+5. npm whoami
+
+6. ADD README.md
+
+7. npm publish

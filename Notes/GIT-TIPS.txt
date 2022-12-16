@@ -1,0 +1,28 @@
+git add .
+git commit -m "message"
+
+git commit -a -m "message" (only commits already tracked files)
+
+git add -A (adds all files in current repository)
+
+This is an alias:
+git config --global alias.ac '!git add -A && git commit -m'
+
+To run alias:
+git ac "message"
+
+git revert HEAD (reverts the most recent commit)
+
+git reflog (log of things done in git)
+
+git log
+
+git log --graph --decorate --oneline
+
+git branch -vv
+
+git remote update -- prune
+
+git reset --hard origin/main
+
+git diff

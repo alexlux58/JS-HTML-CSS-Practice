@@ -1,0 +1,202 @@
+(IP):
+
+ipconfig /all | findstr DNS
+
+New IP address:
+ipconfig /release
+ipconfig /renew
+
+
+ipconfig /displaydns
+
+*** ipconfig /displaydns | clip *** (this will pipe the output to your clipboard) 
+----------------------------------------------------------------------------------------------
+nslookup - (DNS):
+
+Commands:   (identifiers are shown in uppercase, [] means optional)
+NAME            - print info about the host/domain NAME using default server
+NAME1 NAME2     - as above, but use NAME2 as server
+help or ?       - print info on common commands
+set OPTION      - set an option
+    all                 - print options, current server and host
+    [no]debug           - print debugging information
+    [no]d2              - print exhaustive debugging information
+    [no]defname         - append domain name to each query
+    [no]recurse         - ask for recursive answer to query
+    [no]search          - use domain search list
+    [no]vc              - always use a virtual circuit
+    domain=NAME         - set default domain name to NAME
+    srchlist=N1[/N2/.../N6] - set domain to N1 and search list to N1,N2, etc.
+    root=NAME           - set root server to NAME
+    retry=X             - set number of retries to X
+    timeout=X           - set initial time-out interval to X seconds
+    type=X              - set query type (ex. A,AAAA,A+AAAA,ANY,CNAME,MX,NS,PTR,SOA,SRV)
+    querytype=X         - same as type
+    class=X             - set query class (ex. IN (Internet), ANY)
+    [no]msxfr           - use MS fast zone transfer
+    ixfrver=X           - current version to use in IXFR transfer request
+server NAME     - set default server to NAME, using current default server
+lserver NAME    - set default server to NAME, using initial server
+root            - set current default server to the root
+ls [opt] DOMAIN [> FILE] - list addresses in DOMAIN (optional: output to FILE)
+    -a          -  list canonical names and aliases
+    -d          -  list all records
+    -t TYPE     -  list records of the given RFC record type (ex. A,CNAME,MX,NS,PTR etc.)
+view FILE           - sort an 'ls' output file and view it with pg
+exit            - exit the program
+
+----------------------------------------------------------------------------------------------
+(MAC ADDRESS):
+
+getmac /v
+
+arp -a
+
+----------------------------------------------------------------------------------------------
+POWER:
+
+powercfg /energy
+
+POWERCFG /COMMAND [ARGUMENTS]
+
+Description:
+  Enables users to control power settings on a local system.
+
+  For detailed command and option information, run "POWERCFG /? <COMMAND>"
+
+Command List:
+  /LIST, /L          Lists all power schemes.
+
+  /QUERY, /Q         Displays the contents of a power scheme.
+
+  /CHANGE, /X        Modifies a setting value in the current power scheme.
+
+  /CHANGENAME        Modifies the name and description of a power scheme.
+
+  /DUPLICATESCHEME   Duplicates a power scheme.
+
+  /DELETE, /D        Deletes a power scheme.
+
+  /DELETESETTING     Deletes a power setting.
+
+  /SETACTIVE, /S     Makes a power scheme active on the system.
+
+  /GETACTIVESCHEME   Retrieves the currently active power scheme.
+
+  /SETACVALUEINDEX   Sets the value associated with a power setting
+                     while the system is powered by AC power.
+
+  /SETDCVALUEINDEX   Sets the value associated with a power setting
+                     while the system is powered by DC power.
+
+  /IMPORT            Imports all power settings from a file.
+
+  /EXPORT            Exports a power scheme to a file.
+
+  /ALIASES           Displays all aliases and their corresponding GUIDs.
+
+  /GETSECURITYDESCRIPTOR
+                     Gets a security descriptor associated with a specified
+                     power setting, power scheme, or action.
+
+  /SETSECURITYDESCRIPTOR
+                     Sets a security descriptor associated with a
+                     power setting, power scheme, or action.
+
+  /HIBERNATE, /H     Enables and disables the hibernate feature.
+
+  /AVAILABLESLEEPSTATES, /A
+                     Reports the sleep states available on the system.
+
+  /DEVICEQUERY       Returns a list of devices that meet specified criteria.
+
+  /DEVICEENABLEWAKE  Enables a device to wake the system from a sleep state.
+
+  /DEVICEDISABLEWAKE Disables a device from waking the system from a sleep
+                     state.
+
+  /LASTWAKE          Reports information about what woke the system from the
+                     last sleep transition.
+
+  /WAKETIMERS        Enumerates active wake timers.
+
+  /REQUESTS          Enumerates application and driver Power Requests.
+
+  /REQUESTSOVERRIDE  Sets a Power Request override for a particular Process,
+                     Service, or Driver.
+
+  /ENERGY            Analyzes the system for common energy-efficiency and
+                     battery life problems.
+
+  /BATTERYREPORT     Generates a report of battery usage.
+
+  /SLEEPSTUDY        Generates a diagnostic system power transition report.
+
+  /SRUMUTIL          Dumps Energy Estimation data from System Resource Usage
+                     Monitor (SRUM).
+
+  /SYSTEMSLEEPDIAGNOSTICS
+                     Generates a diagnostic report of system sleep transitions.
+
+  /SYSTEMPOWERREPORT Generates a diagnostic system power transition report.
+
+  /POWERTHROTTLING   Control power throttling for an application.
+
+  ----------------------------------------------------------------------------------------------
+(DRIVE INFO):
+
+*** chkdsk /f
+
+*** (sfc):
+
+Scans the integrity of all protected system files and replaces incorrect versions with
+correct Microsoft versions.
+
+SFC [/SCANNOW] [/VERIFYONLY] [/SCANFILE=<file>] [/VERIFYFILE=<file>]
+    [/OFFWINDIR=<offline windows directory> /OFFBOOTDIR=<offline boot directory> [/OFFLOGFILE=<log file path>]]
+
+/SCANNOW        Scans integrity of all protected system files and repairs files with
+                problems when possible.
+/VERIFYONLY     Scans integrity of all protected system files. No repair operation is
+                performed.
+/SCANFILE       Scans integrity of the referenced file, repairs file if problems are
+                identified. Specify full path <file>
+/VERIFYFILE     Verifies the integrity of the file with full path <file>.  No repair
+                operation is performed.
+/OFFBOOTDIR     For offline repair, specify the location of the offline boot directory
+/OFFWINDIR      For offline repair, specify the location of the offline windows directory
+/OFFLOGFILE     For offline repair, optionally enable logging by specifying a log file path
+
+e.g.
+
+        sfc /SCANNOW
+        sfc /VERIFYFILE=c:\windows\system32\kernel32.dll
+        sfc /SCANFILE=d:\windows\system32\kernel32.dll /OFFBOOTDIR=d:\ /OFFWINDIR=d:\windows
+        sfc /SCANFILE=d:\windows\system32\kernel32.dll /OFFBOOTDIR=d:\ /OFFWINDIR=d:\windows /OFFLOGFILE=c:\log.txt
+        sfc /VERIFYONLY
+
+*** DISM /Online /Cleanup-Image /ScanHealth /RestoreHealth
+
+*** tasklist
+*** taskkill /f /pid 20184
+
+
+----------------------------------------------------------------------------------------------
+(WIRELESS INFO):
+
+*** netsh wlan show wlanreport
+
+*** netsh advfirewall set allprofiles state off/on
+
+*** ping -t
+
+*** tracert [url]
+
+*** netstat
+*** netstat -af
+*** netstat -o
+*** netstat -e -t 5
+
+*** route print
+
+*** shutdown /r /fw /f /t 0 (restarts computer to system BIOS)
