@@ -81,6 +81,28 @@ const displayMovements = function (movements) {
 displayMovements(account1.movements);
 console.log(containerMovements.innerHTML);
 
+const user = 'Steven Thomas Williams';
+const createUsernames = function (accounts) {
+  accounts.forEach(function (account) {
+    account.username = account.owner
+      .toLowerCase()
+      .split(' ')
+      .map(function (name) {
+        return name[0];
+      });
+  });
+  createUsernames(accounts);
+  console.log(accounts);
+
+  // const username = user
+  // .toLowerCase()
+  // .split(' ')
+  // .map(function (name) {
+  //   return name[0];
+  // });
+};
+console.log(createUsernames(user));
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -94,3 +116,8 @@ const currencies = new Map([
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
+
+const deposits = movements.filter(function (mov) {
+  return mov > 0;
+});
+console.log(movements);
