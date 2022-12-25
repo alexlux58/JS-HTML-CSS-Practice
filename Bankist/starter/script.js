@@ -72,7 +72,7 @@ const displayMovements = function (movements) {
           <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-          <div class="movements__date">${mov}</div>
+          <div class="movements__date">${mov} EUR</div>
         </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -82,17 +82,15 @@ displayMovements(account1.movements);
 console.log(containerMovements.innerHTML);
 
 const user = 'Steven Thomas Williams';
-const createUsernames = function (accounts) {
-  accounts.forEach(function (account) {
-    account.username = account.owner
+const createUsernames = function (accs) {
+  console.log(typeof accs);
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
       .toLowerCase()
       .split(' ')
-      .map(function (name) {
-        return name[0];
-      });
+      .map(name => name[0])
+      .join('');
   });
-  createUsernames(accounts);
-  console.log(accounts);
 
   // const username = user
   // .toLowerCase()
@@ -101,7 +99,36 @@ const createUsernames = function (accounts) {
   //   return name[0];
   // });
 };
-console.log(createUsernames(user));
+createUsernames(accounts);
+console.log(accounts);
+// console.log(createUsernames(user));
+
+const calcPrintBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+
+calcPrintBalance(account2.movements);
+
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((accumulate, movement) => accumulate + movement, 0);
+  labelSumIn.textContent = `${incomes} EUR`;
+
+  const out = movements
+    .filter(mov => mov < 0)
+    .reduce((accumulate, movement) => accumulate + movement, 0);
+  labelSumOut.textContent = `${out} EUR`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .reduce((accumulate, movement) => accumulate + movement, 0);
+  labelSumInterest.textContent = `${interest} EUR`;
+};
+
+calcDisplaySummary(account1.movements);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -120,4 +147,27 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 const deposits = movements.filter(function (mov) {
   return mov > 0;
 });
-console.log(movements);
+console.log('MOVEMENTS:\n', movements);
+console.log('DEPOSITS(FILTER):\n', deposits);
+
+const depositFor = [];
+const withdrawals = [];
+for (const mov of movements) {
+  if (mov > 0) depositFor.push(mov);
+  else if (mov == 0) continue;
+  else withdrawals.push(mov);
+}
+console.log('DEPOSITS(for of):\n', depositFor);
+console.log('WITHDRAWALS(for of):\n', withdrawals);
+
+const balance = movements.reduce(function (accumalator, current, i, array) {
+  console.log(`Iteration ${i}: ${accumalator}`);
+  return accumalator + current;
+}, 0); // <- the zero is the initial value of the accumalator
+
+console.log('BALANCE:\n', balance);
+
+const max = movements.reduce((accumulator, movement) => {
+  if (accumulator > movement) return accumulator;
+  else return movement;
+}, movements[0]);
