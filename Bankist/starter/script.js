@@ -124,11 +124,29 @@ const calcDisplaySummary = function (movements) {
   const interest = movements
     .filter(mov => mov > 0)
     .map(deposit => (deposit * 1.2) / 100)
+    .filter((int, i, arr) => {
+      console.log(arr);
+      return int >= 1;
+    })
     .reduce((accumulate, movement) => accumulate + movement, 0);
   labelSumInterest.textContent = `${interest} EUR`;
 };
 
 calcDisplaySummary(account1.movements);
+
+let currentAccount;
+
+// Login
+btnLogin.addEventListener('click', e => {
+  e.preventDefault(); // Prevents form from submiting and refreshing page
+  console.log('LOGIN');
+  accounts.find(acc => acc.owner === inputLoginUsername.value);
+
+  console.log(currentAccount);
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    console.log('LOGIN');
+  }
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -171,3 +189,5 @@ const max = movements.reduce((accumulator, movement) => {
   if (accumulator > movement) return accumulator;
   else return movement;
 }, movements[0]);
+
+movements.find(mov => mov < 0); // returns the first element that is true
