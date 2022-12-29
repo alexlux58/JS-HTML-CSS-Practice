@@ -140,11 +140,16 @@ let currentAccount;
 btnLogin.addEventListener('click', e => {
   e.preventDefault(); // Prevents form from submiting and refreshing page
   console.log('LOGIN');
-  accounts.find(acc => acc.owner === inputLoginUsername.value);
-
+  currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
   console.log(currentAccount);
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     console.log('LOGIN');
+    // Display UI and message
+    labelWelcome.textContent = `Welcome back ${currentAccount.owner.split(' ')[0]}`
+    containerApp.style.opacity = 100;
+    // Display Movements
+    // Display Balance
+    // Display summary
   }
 });
 
