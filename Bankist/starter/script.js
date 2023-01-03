@@ -78,12 +78,12 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-displayMovements(account1.movements);
-console.log(containerMovements.innerHTML);
+
+// console.log(containerMovements.innerHTML);
 
 const user = 'Steven Thomas Williams';
 const createUsernames = function (accs) {
-  console.log(typeof accs);
+  // console.log(typeof accs);
   accs.forEach(function (acc) {
     acc.username = acc.owner
       .toLowerCase()
@@ -100,30 +100,29 @@ const createUsernames = function (accs) {
   // });
 };
 createUsernames(accounts);
-console.log(accounts);
+// console.log(accounts);
 // console.log(createUsernames(user));
 
-const calcPrintBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance} EUR`;
+const calcPrintBalance = function (account) {
+  account.balance = account.movements.reduce((acc, mov) => acc + mov, 0);
+  console.log('ACCOUNT BALANCE: ', account.balance);
+  labelBalance.textContent = `${account.balance} EUR`;
 };
 
-calcPrintBalance(account2.movements);
-
-const calcDisplaySummary = function (movements) {
-  const incomes = movements
+const calcDisplaySummary = function (account) {
+  const incomes = account.movements
     .filter(mov => mov > 0)
     .reduce((accumulate, movement) => accumulate + movement, 0);
   labelSumIn.textContent = `${incomes} EUR`;
 
-  const out = movements
+  const out = account.movements
     .filter(mov => mov < 0)
     .reduce((accumulate, movement) => accumulate + movement, 0);
   labelSumOut.textContent = `${out} EUR`;
 
-  const interest = movements
+  const interest = account.movements
     .filter(mov => mov > 0)
-    .map(deposit => (deposit * 1.2) / 100)
+    .map(deposit => (deposit * account.interestRate) / 100)
     .filter((int, i, arr) => {
       console.log(arr);
       return int >= 1;
@@ -132,24 +131,92 @@ const calcDisplaySummary = function (movements) {
   labelSumInterest.textContent = `${interest} EUR`;
 };
 
-calcDisplaySummary(account1.movements);
+const updateUI = function (account) {
+  // Display Movements
+  displayMovements(account.movements);
+  // Display Balance
+  calcPrintBalance(account);
+  // Display summary
+  calcDisplaySummary(account);
+};
 
 let currentAccount;
 
 // Login
 btnLogin.addEventListener('click', e => {
   e.preventDefault(); // Prevents form from submiting and refreshing page
-  console.log('LOGIN');
-  currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
   console.log(currentAccount);
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     console.log('LOGIN');
     // Display UI and message
-    labelWelcome.textContent = `Welcome back ${currentAccount.owner.split(' ')[0]}`
+    labelWelcome.textContent = `Welcome back ${
+      currentAccount.owner.split(' ')[0]
+    }`;
     containerApp.style.opacity = 100;
-    // Display Movements
-    // Display Balance
-    // Display summary
+    // clear input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur(); // loses the curser on input field
+    updateUI(currentAccount);
+  }
+});
+
+// transfer money
+btnTransfer.addEventListener('click', e => {
+  e.preventDefault(); // Prevents form from submiting and refreshing page
+  const amount = Number(inputTransferAmount.value);
+  const recieverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+
+  inputTransferAmount.value = inputTransferTo.value = '';
+
+  if (
+    amount > 0 &&
+    recieverAcc &&
+    currentAccount.balance >= amount &&
+    recieverAcc?.username !== currentAccount.username
+  ) {
+    // performing the tranfer between sender and receiver
+    currentAccount.movements.push(-amount);
+    recieverAcc.movements.push(amount);
+    updateUI(currentAccount);
+  }
+});
+
+// request loan
+btnLoan.addEventListener('click', e => {
+  e.preventDefault(); // Prevents form from submiting and refreshing page
+  const loanAmount = Number(inputLoanAmount.value);
+  if (
+    loanAmount > 0 &&
+    currentAccount.movements.some(mov => mov >= loanAmount * 0.1)
+  ) {
+    // add movement
+    currentAccount.movements.push(loanAmount);
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = '';
+});
+
+btnClose.addEventListener('click', e => {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const accountIndex = accounts.findIndex(
+      account => account.username === currentAccount.username
+    );
+    // delete account
+    accounts.splice(accountIndex, 1);
+    console.log('deleted');
+    // hide UI
+    containerApp.style.opacity = 0;
+    inputCloseUsername.value = inputClosePin.value = '';
   }
 });
 
@@ -170,8 +237,8 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 const deposits = movements.filter(function (mov) {
   return mov > 0;
 });
-console.log('MOVEMENTS:\n', movements);
-console.log('DEPOSITS(FILTER):\n', deposits);
+// console.log('MOVEMENTS:\n', movements);
+// console.log('DEPOSITS(FILTER):\n', deposits);
 
 const depositFor = [];
 const withdrawals = [];
@@ -180,11 +247,11 @@ for (const mov of movements) {
   else if (mov == 0) continue;
   else withdrawals.push(mov);
 }
-console.log('DEPOSITS(for of):\n', depositFor);
-console.log('WITHDRAWALS(for of):\n', withdrawals);
+// console.log('DEPOSITS(for of):\n', depositFor);
+// console.log('WITHDRAWALS(for of):\n', withdrawals);
 
 const balance = movements.reduce(function (accumalator, current, i, array) {
-  console.log(`Iteration ${i}: ${accumalator}`);
+  // console.log(`Iteration ${i}: ${accumalator}`);
   return accumalator + current;
 }, 0); // <- the zero is the initial value of the accumalator
 
@@ -196,3 +263,9 @@ const max = movements.reduce((accumulator, movement) => {
 }, movements[0]);
 
 movements.find(mov => mov < 0); // returns the first element that is true
+
+console.log(movements.includes(-130));
+
+console.log(movements.some(mov => mov > 0));
+
+console.log(movements.every(mov => mov > 0));
