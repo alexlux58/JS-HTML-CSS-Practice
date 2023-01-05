@@ -269,3 +269,6 @@ console.log(movements.includes(-130));
 console.log(movements.some(mov => mov > 0));
 
 console.log(movements.every(mov => mov > 0));
+
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat(2)); // flat() only goes one level deep unless specified in the parameter
