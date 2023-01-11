@@ -272,3 +272,20 @@ console.log(movements.every(mov => mov > 0));
 
 const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
 console.log(arr.flat(2)); // flat() only goes one level deep unless specified in the parameter
+
+const accountMovements = accounts.map(acc => acc.movements);
+console.log(accountMovements);
+
+console.log(accountMovements.flat());
+
+// there is also flatMap()
+
+// return < 0, A, B (ieep order)
+// return > 0, B, A (switch order)
+movements.sort((a, b) => {
+  if (a > b) return -1;
+  if (b > a) return 1;
+});
+
+movements.sort((a, b) => a - b);
+movements.sort((a, b) => b - a);
